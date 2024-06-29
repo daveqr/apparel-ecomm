@@ -34,7 +34,7 @@ jobs:
           corepack yarn test:all
 
   catalog-tests:
-    name: Run tests for Catalog
+    name: Run tests for Catalog service
     runs-on: ubuntu-latest
 
     steps:
@@ -57,4 +57,56 @@ jobs:
       - name: Run Catalog tests
         run: |
           cd services/catalog
+          corepack yarn test:all
+
+  user-tests:
+    name: Run tests for User service
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'v22.2.0'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: |
+          cd services/user
+          corepack yarn install
+
+      - name: Run User tests
+        run: |
+          cd services/user
+          corepack yarn test:all
+
+  shared-tests:
+    name: Run tests for Shared library
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'v22.2.0'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: |
+          cd shared
+          corepack yarn install
+
+      - name: Run Shared tests
+        run: |
+          cd shared
           corepack yarn test:all
